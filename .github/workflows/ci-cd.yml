@@ -1,4 +1,4 @@
-name: ci/cd
+name: ci-cd
 
 on:
   push:
@@ -47,7 +47,7 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter clean
-      --run: flutter build ipa --release --no-codesign
+      - run: flutter build ipa --release --no-codesign
 
   build-android:
     name: Flutter Build Android AppBundle
