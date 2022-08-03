@@ -28,14 +28,14 @@ jobs:
           path: build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload
           filename: build/ios/iphoneos/Runner.app build/ios/iphoneos/app.ipa
       - run: rm -rf Payload
-      - name: Push IPA to Releases
-        uses: ncipollo/release-action@v1.10.0
-        with:
-          artifacts: "build/ios/iphoneos/*.ipa"
+      # - name: Push IPA to Releases
+      #   uses: ncipollo/release-action@v1.10.0
+      #   with:
+      #     artifacts: "build/ios/iphoneos/*.ipa"
       - name: Upload IPA
         uses: actions/upload-artifact@v3.1.0
         with: 
-          name: appbundle
+          name: app ipa
           path: build/ios/iphoneos/app.ipa
 
   build-android:
@@ -53,10 +53,10 @@ jobs:
       - run: flutter test
       - run: flutter build appbundle
       - run: flutter build apk --debug --split-per-abi
-      - name: Push APK to Releases
-        uses: ncipollo/release-action@v1.10.0
-        with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
+      # - name: Push APK to Releases
+      #   uses: ncipollo/release-action@v1.10.0
+      #   with:
+      #     artifacts: "build/app/outputs/apk/debug/*.apk"
       - name: Upload AppBundle
         uses: actions/upload-artifact@v3.1.0
         with: 
