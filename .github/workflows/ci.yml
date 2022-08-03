@@ -26,7 +26,7 @@ jobs:
       - run: flutter analyze
       - run: flutter format --dry-run --set-exit-if-changed /lib
       - run: flutter format --dry-run --set-exit-if-changed /test
-      - run: flutter test --coverrage
+      - run: flutter test --coverage
       - run: flutter test --machine > test-results.json
       - uses: dorny/test-reporter@v1.4.2
         with:
