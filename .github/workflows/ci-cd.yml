@@ -6,36 +6,8 @@ on:
       - v*
 
 jobs:
-  flutter_test:
-    name: Run Flutter Analyze and Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: "stable"
-      - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter format --dry-run --set-exit-if-changed /lib
-      - run: flutter format --dry-run --set-exit-if-changed /test
-      - run: flutter test --coverage
-      - run: flutter test --machine > test-results.json
-      - uses: dorny/test-reporter@v1.4.2
-        with:
-          name: test-results
-          path: test-results.json
-          reporter: flutter-json
-      - uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
-        with:
-          min_coverage: 80
-
-  
   build_ios:
     name: Flutter Build iOS
-    needs: [flutter_test]
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -47,25 +19,45 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter clean
-      - run: flutter build ipa --target=lib/main.dart --release --no-codesign
+      - run: flutter build ios --release --no-codesign
+      - run: mkdir -p build/ios/iphoneos/Payload
+      - run: mv build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload
+      - run: cd build/ios/iphoneos
+      - uses: montudor/action-zip@v1
+        with: 
+        args: zip -r app.ipa Payload
+      - run: rm -rf Payload
+      - name: Push IPA to Releases
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          artifacts: "build/ios/iphoneos/*.ipa"
+      - name: Upload IPA
+        uses: actions/upload-artifact@v3.1.0
+        with: 
+          name: appbundle
+          path: build/ios/iphoneos/app.ipa
 
   build-android:
     name: Flutter Build Android AppBundle
-    needs: [flutter_test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2.6.1
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter clean
+      - run: flutter test
       - run: flutter build appbundle
+      - run: flutter build apk --debug --split-per-abi
+      - name: Push APK to Releases
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          artifacts: "build/app/outputs/apk/debug/*.apk"
       - name: Upload AppBundle
-        uses: actions/upload-artifact@v2.1.4
+        uses: actions/upload-artifact@v3.1.0
         with: 
           name: appbundle
           path: build/app/outputs/bundle/release/app-release.aab
