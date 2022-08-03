@@ -25,9 +25,11 @@ jobs:
       - uses: thedoctor0/zip-release@main
         with:
           type: zip
-          path: build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload
-          filename: build/ios/iphoneos/Runner.app build/ios/iphoneos/app.ipa
+          directory: build/ios/iphoneos/
+          path: Payload
+          filename: app.zip
       - run: rm -rf Payload
+      - run: mv build/ios/iphoneos/app.zip build/ios/iphoneos/app.ipa
       # - name: Push IPA to Releases
       #   uses: ncipollo/release-action@v1.10.0
       #   with:
