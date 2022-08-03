@@ -24,8 +24,8 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter analyze
-      - run: flutter format --dry-run --set-exit-id-changed /lib
-      - run: flutter format --dry-run --set-exit-id-changed /test
+      - run: flutter format --dry-run --set-exit-if-changed /lib
+      - run: flutter format --dry-run --set-exit-if-changed /test
       - run: flutter test --coverrage
       - run: flutter test --machine > test-results.json
       - uses: dorny/test-reporter@v1.4.2
