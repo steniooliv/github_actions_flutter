@@ -23,8 +23,9 @@ jobs:
       - run: mkdir -p build/ios/iphoneos/Payload
       - run: mv build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload
       - run: cd build/ios/iphoneos
-      - run: zip -qr app-unsigned.ipa . -i Payload/
+      - run: zip -qr build/ios/iphoneos/app-unsigned.ipa . -i Payload/Runner.app
       - run: rm -rf Payload
+      - run: cd build/ios/iphoneos/
       - run: ls
       
       # - name: Push IPA to Releases
@@ -35,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with: 
           name: app-unsigned-ios
-          path: build/ios/iphoneos/*
+          path: build/ios/iphoneos/app-unsigned.ipa
 
   build-android:
     name: Flutter Build Android AppBundle
