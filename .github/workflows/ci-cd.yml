@@ -24,8 +24,8 @@ jobs:
           echo "Creating IPA file from Runner.app"
           mkdir -p build/ios/iphoneos/Payload
           mv build/ios/iphoneos/Runner.app/ build/ios/iphoneos/Payload
-          cd build/ios/iphoneos
-          zip -r app-unsigned.ipa Payload/Runner.app/
+          cd build/ios/iphoneos/Payload
+          zip -r ../app-unsigned.ipa Runner.app/
       - run: rm -rf build/ios/iphoneos/Payload
       
       # - name: Push IPA to Releases
@@ -61,7 +61,7 @@ jobs:
       #   with:
       #     artifacts: "build/app/outputs/apk/debug/*.apk"
       #     token: !!! required for this package
-      
+
       - name: Upload AppBundle
         uses: actions/upload-artifact@v3.1.0
         with: 
