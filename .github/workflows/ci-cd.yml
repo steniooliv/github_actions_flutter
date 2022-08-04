@@ -25,6 +25,7 @@ jobs:
       - run: cd build/ios/iphoneos
       - run: zip -qr app-unsigned.ipa . -i Payload/
       - run: rm -rf Payload
+      - run: ls
       
       # - name: Push IPA to Releases
       #   uses: ncipollo/release-action@v1.10.0
@@ -33,8 +34,8 @@ jobs:
       - name: Upload IPA
         uses: actions/upload-artifact@v3.1.0
         with: 
-          name: app ipa
-          path: build/ios/iphoneos/app-unsigned.ipa
+          name: app-unsigned-ios
+          path: build/ios/iphoneos/*
 
   build-android:
     name: Flutter Build Android AppBundle
