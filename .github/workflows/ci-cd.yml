@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with: 
           name: app ipa
-          path: build/ios/iphoneos/app.ipa
+          path: build/ios/iphoneos/*.ipa
 
   build-android:
     name: Flutter Build Android AppBundle
