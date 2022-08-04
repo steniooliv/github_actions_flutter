@@ -32,6 +32,8 @@ jobs:
       #   uses: ncipollo/release-action@v1.10.0
       #   with:
       #     artifacts: "build/ios/iphoneos/*.ipa"
+      #     token: !!! required for this package
+
       - name: Upload IPA
         uses: actions/upload-artifact@v3.1.0
         with: 
@@ -53,10 +55,13 @@ jobs:
       - run: flutter test
       - run: flutter build appbundle
       - run: flutter build apk --debug --split-per-abi
+      
       # - name: Push APK to Releases
       #   uses: ncipollo/release-action@v1.10.0
       #   with:
       #     artifacts: "build/app/outputs/apk/debug/*.apk"
+      #     token: !!! required for this package
+      
       - name: Upload AppBundle
         uses: actions/upload-artifact@v3.1.0
         with: 
