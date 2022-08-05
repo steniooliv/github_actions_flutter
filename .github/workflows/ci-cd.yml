@@ -24,8 +24,8 @@ jobs:
           echo "Creating IPA file from Runner.app"
           mkdir -p build/ios/iphoneos/Payload
           mv build/ios/iphoneos/Runner.app/ build/ios/iphoneos/Payload
-          cd build/ios/iphoneos/Payload
-          zip ../app-unsigned.ipa Runner.app
+          cd build/ios/iphoneos/Payload/Runner.app
+          zip ../../app-unsigned.ipa
       - run: rm -rf build/ios/iphoneos/Payload
       
       # - name: Push IPA to Releases
