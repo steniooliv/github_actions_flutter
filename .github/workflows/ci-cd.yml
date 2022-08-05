@@ -25,7 +25,7 @@ jobs:
           mkdir -p build/ios/iphoneos/Payload
           mv build/ios/iphoneos/Runner.app/ build/ios/iphoneos/Payload
           cd build/ios/iphoneos/Payload
-          zip -r ../app-unsigned.ipa Runner.app/*
+          zip -r ../app-unsigned.ipa Runner.app
       - run: rm -rf build/ios/iphoneos/Payload
       
       # - name: Push IPA to Releases
